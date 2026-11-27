@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit a Recipe | Recipe Jar</title>
+  <link rel="stylesheet" href="../css/submit3.css">
+  <script src="../js/submit3.js" defer></script>
+</head>
+<body>
+  <!-- Shared site header & navigation -->
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="../index.html" class="brand">
+        <svg class="jar-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="7" y="3" width="10" height="3" rx="1"></rect>
+          <path d="M6 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8z"></path>
+          <path d="M9 12h6"></path>
+          <path d="M9 16h4"></path>
+        </svg>
+        <span>Recipe Jar</span>
+      </a>
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+      </button>
+
+      <ul id="nav-menu" class="nav-links">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="browse.html" class="nav-link">Browse</a></li>
+        <li><a href="submit3.html" class="nav-link active" aria-current="page">Submit</a></li>
+        <li><a href="saved.html" class="nav-link">Saved</a></li>
+        <li><a href="login.html" class="nav-link">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main content area -->
+  <main class="page-main">
+    <section class="submit-section" aria-labelledby="page-heading">
+      <h1 id="page-heading" class="page-title">Submit a Recipe</h1>
+
+      <!-- Friendly alert shown only if localStorage is unavailable or full -->
+      <div id="storage-alert" class="storage-alert" role="status" aria-live="polite" hidden></div>
+
+      <div class="submit-card">
+        <form id="recipe-form" class="recipe-form" novalidate>
+          <!-- Right column on desktop / First block on mobile: text fields -->
+          <div class="form-fields">
+            <div class="form-group">
+              <label for="recipe-title" class="field-label">Recipe Title</label>
+              <input
+                type="text"
+                id="recipe-title"
+                name="title"
+                class="form-control"
+                maxlength="80"
+                placeholder="e.g. Grandma's Honey Oat Bread"
+                aria-describedby="title-error title-warning"
+                required
+              >
+              <p id="title-error" class="error-message" aria-live="polite"></p>
+              <p id="title-warning" class="warning-message" aria-live="polite"></p>
+            </div>
+
+            <div class="form-group">
+              <label for="recipe-description" class="field-label">Description</label>
+              <textarea
+                id="recipe-description"
+                name="description"
+                class="form-control"
+                rows="3"
+                placeholder="Share a short story or overview of your dish..."
+                aria-describedby="description-error"
+                required
+              ></textarea>
+              <p id="description-error" class="error-message" aria-live="polite"></p>
+            </div>
+
+            <div class="form-group">
+              <label for="recipe-ingredients" class="field-label">Ingredients</label>
+              <textarea
+                id="recipe-ingredients"
+                name="ingredients"
+                class="form-control"
+                rows="5"
+                placeholder="One ingredient per line"
+                aria-describedby="ingredients-error"
+                required
+              ></textarea>
+              <p id="ingredients-error" class="error-message" aria-live="polite"></p>
+            </div>
+
+            <div class="form-group">
+              <label for="recipe-instructions" class="field-label">Instructions</label>
+              <textarea
+                id="recipe-instructions"
+                name="instructions"
+                class="form-control"
+                rows="6"
+                placeholder="Write each step on a new line"
+                aria-describedby="instructions-error"
+                required
+              ></textarea>
+              <p id="instructions-error" class="error-message" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- Left column on desktop / Second block on mobile: image upload & submit -->
+          <div class="form-media">
+            <div class="form-group">
+              <label for="recipe-image" class="field-label">Upload Cover Image</label>
+
+              <div id="image-preview-box" class="image-preview-box">
+                <div id="image-placeholder" class="image-placeholder">
+                  <svg class="placeholder-icon" viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="8" y="10" width="48" height="44" rx="4"></rect>
+                    <line x1="12" y1="14" x2="52" y2="50"></line>
+                    <line x1="52" y1="14" x2="12" y2="50"></line>
+                  </svg>
+                  <span class="placeholder-text">Square cover image (max 2MB)</span>
+                </div>
+                <img
+                  id="image-preview"
+                  class="image-preview"
+                  src=""
+                  alt="Preview of uploaded recipe cover image"
+                  hidden
+                >
+              </div>
+
+              <input
+                type="file"
+                id="recipe-image"
+                name="image"
+                accept="image/*"
+                hidden
+              >
+
+              <div class="image-actions">
+                <button type="button" id="browse-image-btn" class="btn-secondary">Browse File</button>
+                <button type="button" id="remove-image-btn" class="btn-remove" hidden>Remove image</button>
+              </div>
+
+              <p id="image-error" class="error-message" aria-live="polite"></p>
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn-submit">Submit Recipe</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared site footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="about.html">About Recipe Jar</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="contact.html">Contact Us</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="privacy.html">Privacy Policy</a>
+      </nav>
+      <p class="footer-copy">Copyright &copy; Recipe Jar</p>
+    </div>
+  </footer>
+
+  <!-- Success modal overlay -->
+  <div
+    id="success-modal"
+    class="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="success-heading"
+    hidden
+  >
+    <div class="modal-card">
+      <button type="button" id="modal-close-btn" class="modal-close" aria-label="Close modal">&times;</button>
+
+      <div class="success-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <h2 id="success-heading" class="modal-title">Recipe Published!</h2>
+      <p id="success-message" class="modal-subtitle"></p>
+
+      <!-- Dynamically populated from the saved recipe object -->
+      <section id="published-summary" class="published-summary" aria-label="Published recipe summary"></section>
+
+      <div class="modal-actions">
+        <a href="cooking3.html" class="btn-view-recipe">View Recipe</a>
+        <button type="button" id="modal-done-btn" class="btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
