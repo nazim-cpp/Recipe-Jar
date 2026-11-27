@@ -1,0 +1,331 @@
+/* Page colour palette */
+:root {
+  --bg: #FAF7F2;            /* page background */
+  --card: #FFFFFF;          /* card surface */
+  --card-border: #E6E0D6;   /* card border */
+  --primary: #2E5A44;       /* header, headings, active pill */
+  --accent: #D96B43;        /* buttons ("View Recipe"), hearts */
+  --tint: #E9EFEA;          /* badge / tag background */
+  --text: #1F2933;          /* body text */
+}
+
+/* Base typography and colours */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* Visible focus outline for keyboard accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Header & Navigation */
+.site-header {
+  background-color: var(--primary);
+}
+
+.brand-wordmark {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--card);
+}
+
+.site-header .nav-link {
+  color: var(--card);
+  font-weight: 500;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+}
+
+.site-header .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: var(--card);
+}
+
+.site-header .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.22);
+  color: var(--card);
+  font-weight: 600;
+}
+
+/* Main Heading */
+.page-heading {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 1.85rem;
+  color: var(--primary);
+}
+
+/* Filter Pills Row */
+.filter-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.filter-pill {
+  background-color: var(--card);
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.filter-pill:hover {
+  background-color: var(--tint);
+}
+
+.filter-pill.active {
+  background-color: var(--primary);
+  color: var(--card);
+}
+
+/* Recipe Card */
+.recipe-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(31, 41, 51, 0.07);
+}
+
+/* Card Image & Placeholder Wrapper */
+.recipe-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: var(--tint);
+  flex-shrink: 0;
+}
+
+.recipe-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.img-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: var(--tint);
+  color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lora', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  user-select: none;
+}
+
+.img-placeholder-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Small tinted time badge on image corner */
+.time-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--tint);
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+}
+
+/* Filled orange heart button at top-right of card */
+.heart-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(31, 41, 51, 0.12);
+}
+
+.heart-btn:hover {
+  background-color: var(--tint);
+}
+
+/* Card Body */
+.recipe-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1rem 1.1rem;
+}
+
+.recipe-title {
+  font-family: 'Lora', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.35rem;
+}
+
+.recipe-meta {
+  font-size: 0.92rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+/* Pill-shaped View Recipe button */
+.btn-accent-pill {
+  background-color: var(--accent);
+  color: var(--card);
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-accent-pill:hover,
+.btn-accent-pill:focus {
+  background-color: var(--primary);
+  color: var(--card);
+}
+
+/* Empty State Box */
+.empty-state {
+  background-color: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  max-width: 520px;
+  margin: 1rem auto;
+  box-shadow: 0 4px 12px rgba(31, 41, 51, 0.06);
+}
+
+.empty-state-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-text {
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+/* Undo Toast */
+.jar-toast {
+  background-color: var(--primary);
+  color: var(--card);
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+}
+
+.btn-undo {
+  background-color: var(--accent);
+  color: var(--card);
+  border-radius: 999px;
+  font-weight: 600;
+  padding: 0.25rem 0.85rem;
+  border: none;
+}
+
+.btn-undo:hover {
+  background-color: var(--card);
+  color: var(--primary);
+}
+
+/* Shared Footer */
+.site-footer {
+  background-color: var(--primary);
+  color: var(--card);
+}
+
+.footer-links a {
+  color: var(--card);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-note {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* Mobile layout (< 768px): horizontal pills scroll + horizontal recipe cards */
+@media (max-width: 767.98px) {
+  .page-heading {
+    font-size: 1.55rem;
+  }
+
+  .filter-pills-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .recipe-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .recipe-img-wrap {
+    width: 125px;
+    height: auto;
+    min-height: 135px;
+  }
+
+  .recipe-body {
+    padding: 0.85rem;
+    justify-content: space-between;
+  }
+
+  /* Prevent recipe title from overlapping the top-right heart button */
+  .recipe-title {
+    font-size: 1rem;
+    padding-right: 2.5rem;
+  }
+
+  .recipe-meta {
+    font-size: 0.85rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .btn-accent-pill {
+    padding: 0.4rem 0.95rem;
+    font-size: 0.85rem;
+    align-self: flex-start;
+  }
+}
