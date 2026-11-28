@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Details | Recipe Jar</title>
+  <!-- Bootstrap 5 CSS from CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Shared Recipe Jar styles from the Browse page (colours, header, footer, buttons) -->
+  <link rel="stylesheet" href="../css/browse.css">
+  <!-- Styles used only on this page -->
+  <link rel="stylesheet" href="../css/recipe_scaler.css">
+</head>
+<body>
+
+  <!-- Reusable Site Header (same as the Browse page) -->
+  <header class="site-header">
+  <nav class="navbar navbar-expand-md" aria-label="Main navigation">
+    <div class="container">
+      <a class="navbar-brand brand-logo" href="../index.html">
+        <!-- White jar icon (drawn with SVG so the colour can change) -->
+        <svg width="22" height="26" viewBox="0 0 22 26" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+          <rect x="5" y="1.5" width="12" height="4" rx="1"></rect>
+          <path d="M4 8 Q4 5.5 6 5.5 H16 Q18 5.5 18 8 V22 Q18 24.5 16 24.5 H6 Q4 24.5 4 22 Z"></path>
+          <line x1="8" y1="12" x2="14" y2="12"></line>
+        </svg>
+        <span>Recipe Jar</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-md-center mt-2 mt-md-0">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="browse.html" aria-current="page">Browse</a></li>
+          <li class="nav-item"><a class="nav-link" href="submit.html">Submit</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="saved.html">
+              Saved <span id="savedCountBadge" class="saved-badge" aria-label="Saved recipes count">0</span>
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <!-- Main Content -->
+  <main class="container py-4 py-md-5">
+    <a href="browse.html" class="back-link">&larr; Back to Browse</a>
+
+    <!-- Shown only when the recipe id in the web address is wrong or missing -->
+    <section id="notFound" class="not-found text-center p-4 p-md-5 d-none">
+      <h1 class="page-title">Recipe not found</h1>
+      <p class="mb-3">We could not find that recipe. Go back to Browse and choose another one.</p>
+      <a href="browse.html" class="btn btn-accent">Browse All Recipes</a>
+    </section>
+
+    <!-- Recipe details (filled in by recipe_scaler.js) -->
+    <article id="recipeContent">
+      <div class="row g-4">
+
+        <!-- Left side: recipe photo -->
+        <div class="col-12 col-md-5">
+          <img id="recipeImage" class="detail-img" src="../images/placeholder.svg" alt="Recipe photo"
+            onerror="this.onerror=null; this.src='../images/placeholder.svg';">
+        </div>
+
+        <!-- Right side: title, rating, times, save button and serving scaler -->
+        <div class="col-12 col-md-7">
+          <h1 id="recipeTitle" class="page-title mb-2">Recipe</h1>
+          <p class="mb-2">
+            <span id="recipeCuisine" class="cuisine-badge d-inline-block">Cuisine</span>
+          </p>
+
+          <div class="rating-row">
+            <p id="recipeRating" class="rating-line"></p>
+            <button type="button" id="saveBtn" class="btn btn-accent save-btn">♡ Save Recipe</button>
+          </div>
+
+          <!-- Prep, Cook and Total time -->
+          <div class="time-row">
+            <div class="time-box">
+              <span class="time-label">Prep Time</span>
+              <span id="prepTime" class="time-value">0 min</span>
+            </div>
+            <div class="time-box">
+              <span class="time-label">Cook Time</span>
+              <span id="cookTime" class="time-value">0 min</span>
+            </div>
+            <div class="time-box time-total">
+              <span class="time-label">Total Time</span>
+              <span id="totalTime" class="time-value">0 min</span>
+            </div>
+          </div>
+
+          <!-- Serving Scaler -->
+          <section class="scaler-card" aria-label="Serving scaler">
+            <h2 class="scaler-title">Serving Scaler</h2>
+            <div class="scaler-controls">
+              <button type="button" id="decreaseBtn" class="scaler-btn" aria-label="Decrease servings">&minus;</button>
+              <span id="servingsText" class="servings-text" aria-live="polite">1 Serving</span>
+              <button type="button" id="increaseBtn" class="scaler-btn" aria-label="Increase servings">+</button>
+            </div>
+            <p id="servingsError" class="servings-error d-none" role="alert"></p>
+          </section>
+        </div>
+      </div>
+
+      <!-- Tabs: Ingredients / Instructions / Nutrition -->
+      <section class="tabs-card mt-4" aria-label="Recipe information">
+        <div class="tab-list" role="tablist" aria-label="Recipe sections">
+          <button type="button" id="ingredientsTab" class="tab-btn active" role="tab" aria-selected="true"
+            data-tab="ingredients">Ingredients (1 Serving)</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false"
+            data-tab="instructions">Instructions</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false"
+            data-tab="nutrition">Nutrition</button>
+        </div>
+
+        <!-- Ingredients panel -->
+        <div class="tab-panel" role="tabpanel" data-panel="ingredients">
+          <ul id="ingredientList" class="ingredient-list"></ul>
+        </div>
+
+        <!-- Instructions panel -->
+        <div class="tab-panel d-none" role="tabpanel" data-panel="instructions">
+          <ol id="instructionList" class="instruction-list"></ol>
+        </div>
+
+        <!-- Nutrition panel -->
+        <div class="tab-panel d-none" role="tabpanel" data-panel="nutrition">
+          <table class="table nutrition-table">
+            <thead>
+              <tr>
+                <th scope="col">Nutrient</th>
+                <th scope="col">Per Serving</th>
+                <th scope="col" id="nutritionTotalHeading">For 1 Serving</th>
+              </tr>
+            </thead>
+            <tbody id="nutritionBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <button type="button" id="cookingBtn" class="btn cooking-btn w-100 mt-4">Start Cooking Mode</button>
+    </article>
+  </main>
+
+  <!-- Save confirmation pop-up (State 4 of the vertical prototype) -->
+  <div id="saveOverlay" class="overlay d-none" role="dialog" aria-modal="true" aria-labelledby="saveOverlayTitle">
+    <div class="overlay-box text-center">
+      <p class="overlay-check" aria-hidden="true">✔</p>
+      <h2 id="saveOverlayTitle" class="overlay-title">Saved</h2>
+      <p id="saveOverlayText" class="mb-3"></p>
+      <button type="button" id="backToRecipeBtn" class="btn btn-accent w-100">Back to Recipe</button>
+    </div>
+  </div>
+
+  <!-- Cooking Mode pop-up (one step at a time) -->
+  <div id="cookingOverlay" class="overlay d-none" role="dialog" aria-modal="true" aria-labelledby="cookingTitle">
+    <div class="overlay-box">
+      <p id="cookingProgress" class="cooking-progress"></p>
+      <h2 id="cookingTitle" class="overlay-title">Cooking Mode</h2>
+      <p id="cookingStepText" class="cooking-step"></p>
+      <div class="cooking-actions">
+        <button type="button" id="prevStepBtn" class="btn btn-clear">Previous</button>
+        <button type="button" id="nextStepBtn" class="btn btn-accent">Next</button>
+      </div>
+      <button type="button" id="exitCookingBtn" class="btn btn-clear w-100 mt-2">Exit Cooking Mode</button>
+    </div>
+  </div>
+
+  <!-- Reusable Site Footer (same as the Browse page) -->
+  <footer class="site-footer mt-auto">
+    <div class="container">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="about.html">About Recipe Jar</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </nav>
+      <p class="footer-note">Copyright &copy; Recipe Jar</p>
+      <p class="footer-note" id="aiDisclosure">Images on this website were generated using Antigravity's built-in generate_image tool.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle (for mobile hamburger menu) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Page Logic -->
+  <script src="../js/recipe_scaler.js"></script>
+</body>
+</html>
