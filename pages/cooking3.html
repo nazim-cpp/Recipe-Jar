@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cooking Mode | Recipe Jar</title>
+  <link rel="stylesheet" href="../css/cooking3.css">
+  <script src="../js/cooking3.js" defer></script>
+</head>
+<body>
+  <!-- Shared site header & navigation (copied from submit3.html, no active link here) -->
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="../index.html" class="brand">
+        <svg class="jar-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="7" y="3" width="10" height="3" rx="1"></rect>
+          <path d="M6 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8z"></path>
+          <path d="M9 12h6"></path>
+          <path d="M9 16h4"></path>
+        </svg>
+        <span>Recipe Jar</span>
+      </a>
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+      </button>
+
+      <ul id="nav-menu" class="nav-links">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="browse.html" class="nav-link">Browse</a></li>
+        <li><a href="submit3.html" class="nav-link">Submit</a></li>
+        <li><a href="saved.html" class="nav-link">Saved</a></li>
+        <li><a href="login.html" class="nav-link">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main content area -->
+  <main class="page-main">
+    <section class="cooking-section" aria-labelledby="recipe-heading">
+      <h1 id="recipe-heading" class="page-title">
+        Cooking<span class="desktop-only"> Mode</span>: <span id="recipe-title-text"></span>
+      </h1>
+
+      <!-- Friendly notice if localStorage is unavailable or requested recipe id was not found -->
+      <div id="storage-alert" class="notice-banner" role="status" aria-live="polite" hidden></div>
+      <div id="recipe-notice" class="notice-banner" role="status" aria-live="polite" hidden></div>
+
+      <div class="cooking-card">
+        <!-- Left column (desktop) / Step text first (mobile) -->
+        <section class="step-section" aria-labelledby="step-section-heading">
+          <h2 id="step-section-heading" class="section-heading">Step-by-Step cooking</h2>
+          <p id="step-text" class="step-text"></p>
+        </section>
+
+        <!-- Step image (with placeholder if no saved image) -->
+        <div class="step-image-wrap">
+          <div id="step-image-placeholder" class="step-image-placeholder">
+            <svg viewBox="0 0 64 64" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="8" y="12" width="48" height="40" rx="4"></rect>
+              <circle cx="22" cy="25" r="4"></circle>
+              <path d="M12 44l12-12 9 9 7-7 12 10"></path>
+            </svg>
+            <span>No recipe photo available</span>
+          </div>
+          <img
+            id="step-image"
+            class="step-image"
+            src=""
+            alt="Cover photo for the current recipe"
+            hidden
+          >
+        </div>
+
+        <!-- Right column (desktop) / Timer block (mobile) -->
+        <section class="timer-section" aria-label="Step countdown timer">
+          <p id="timer-display" class="timer-display" aria-live="polite">
+            <span class="timer-label">Timer: </span><span id="timer-value">00:00</span>
+          </p>
+
+          <div class="timer-controls">
+            <button type="button" id="start-timer-btn" class="btn-timer btn-timer-start">Start</button>
+            <button type="button" id="pause-timer-btn" class="btn-timer">Pause</button>
+            <button type="button" id="reset-timer-btn" class="btn-timer">Reset</button>
+          </div>
+
+          <p id="timer-status" class="timer-status" aria-live="polite"></p>
+        </section>
+
+        <!-- Progress bar & Restart link -->
+        <section class="progress-section" aria-label="Cooking progress">
+          <div class="progress-header">
+            <p id="progress-text" class="progress-text" aria-live="polite"></p>
+            <a href="#restart" id="restart-link" class="restart-link">Restart</a>
+          </div>
+          <div
+            id="progress-track"
+            class="progress-track"
+            role="progressbar"
+            aria-valuemin="1"
+            aria-valuemax="5"
+            aria-valuenow="1"
+            aria-label="Recipe step progress"
+          >
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+        </section>
+
+        <!-- Bottom row (desktop) / Next & Previous buttons (mobile) -->
+        <div class="nav-actions">
+          <button type="button" id="prev-btn" class="btn-prev">&lt; Previous Step</button>
+          <button type="button" id="next-btn" class="btn-next">Next Step &gt;</button>
+        </div>
+
+        <!-- Shown when Finish Cooking is clicked on the final step -->
+        <div id="completion-banner" class="completion-banner" role="status" aria-live="polite" hidden>
+          Recipe complete, enjoy your meal!
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared site footer (copied from submit3.html) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="about.html">About Recipe Jar</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="contact.html">Contact Us</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="privacy.html">Privacy Policy</a>
+      </nav>
+      <p class="footer-copy">Copyright &copy; Recipe Jar</p>
+    </div>
+  </footer>
+</body>
+</html>
