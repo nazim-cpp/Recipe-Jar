@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Read community reviews, star ratings, and cooking tips for Recipe Jar recipes."
+  />
+  <title>Reviews &amp; Ratings | Recipe Jar</title>
+
+  <!-- Google Fonts: Inter (body & UI) and Playfair Display (brand wordmark) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap 5 CSS (CDN) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+
+  <!-- Shared site styles + page-specific styles (relative paths only) -->
+  <link rel="stylesheet" href="../css/ridda-style.css" />
+  <link rel="stylesheet" href="../css/reviews.css" />
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
+
+  <!-- Shared Site Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="../index.html" class="brand-link" aria-label="Recipe Jar Home">
+        <img
+          src="../images/logo.png"
+          alt="Recipe Jar logo"
+          class="brand-logo"
+          width="36"
+          height="36"
+        />
+        <span class="brand-name">Recipe Jar</span>
+      </a>
+
+      <button
+        type="button"
+        id="menuToggle"
+        class="menu-toggle"
+        aria-expanded="false"
+        aria-controls="primaryNav"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="menu-toggle-bar" aria-hidden="true"></span>
+        <span class="menu-toggle-bar" aria-hidden="true"></span>
+        <span class="menu-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav id="primaryNav" class="site-nav" aria-label="Primary navigation">
+        <ul class="nav-links">
+          <li><a href="../index.html" class="site-nav-link">Home</a></li>
+          <li><a href="browse.html" class="site-nav-link">Browse</a></li>
+          <li><a href="submit.html" class="site-nav-link">Submit</a></li>
+          <li><a href="saved.html" class="site-nav-link">Saved</a></li>
+          <li><a href="login.html" class="site-nav-link">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="mainContent" class="reviews-main">
+    <div class="container">
+      <!-- Page Heading -->
+      <section class="reviews-header-section" aria-labelledby="reviewsPageHeading">
+        <h1 id="reviewsPageHeading" class="reviews-page-title">Reviews &amp; Ratings</h1>
+        <p class="reviews-page-subtitle">
+          Honest feedback, star ratings, and kitchen notes shared by the Recipe Jar community.
+        </p>
+      </section>
+
+      <!-- Overall Rating Summary & 5-to-1 Star Breakdown (populated dynamically by js/reviews.js) -->
+      <section class="rating-summary-card" aria-labelledby="ratingSummaryHeading">
+        <h2 id="ratingSummaryHeading" class="visually-hidden">Overall rating summary</h2>
+        <div class="summary-grid">
+          <div class="summary-score-panel">
+            <span id="averageRatingValue" class="summary-average-number">0.0</span>
+            <div id="averageRatingStars" class="summary-average-stars" aria-live="polite"></div>
+            <p id="totalReviewsCount" class="summary-total-count" aria-live="polite">0 reviews</p>
+          </div>
+
+          <div id="ratingBreakdownList" class="summary-breakdown" aria-label="Rating breakdown from 5 stars to 1 star"></div>
+        </div>
+      </section>
+
+      <!-- Toolbar Row: Search on the left, Filter/Sort + Write a Review button on the right -->
+      <section class="reviews-toolbar-section" aria-label="Search, filter, and sort reviews">
+        <div class="reviews-toolbar">
+          <div class="search-field-wrapper">
+            <label for="reviewSearchInput" class="visually-hidden">Search reviews</label>
+            <svg
+              class="search-icon"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2" />
+              <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <input
+              type="search"
+              id="reviewSearchInput"
+              class="form-control review-search-input"
+              placeholder="Search reviews..."
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="toolbar-controls">
+            <div class="control-group">
+              <label for="ratingFilterSelect" class="control-label">Rating</label>
+              <select id="ratingFilterSelect" class="form-select toolbar-select">
+                <option value="all">All ratings</option>
+                <option value="5">5 stars</option>
+                <option value="4plus">4 stars &amp; up</option>
+                <option value="3plus">3 stars &amp; up</option>
+                <option value="below3">Below 3 stars</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label for="sortBySelect" class="control-label">Sort by</label>
+              <select id="sortBySelect" class="form-select toolbar-select">
+                <option value="newest">Newest</option>
+                <option value="highest">Highest rated</option>
+                <option value="lowest">Lowest rated</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toolbar-action">
+            <button
+              type="button"
+              id="openWriteReviewBtn"
+              class="btn btn-accent write-review-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#writeReviewModal"
+            >
+              Write a Review
+            </button>
+          </div>
+        </div>
+
+        <p id="resultsCountText" class="results-count-text" aria-live="polite"></p>
+      </section>
+
+      <!-- Reviews Grid (cards rendered dynamically by js/reviews.js) -->
+      <section class="reviews-list-section" aria-label="Community reviews list">
+        <div id="reviewsContainer" class="reviews-grid" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Shared Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#about">About Recipe Jar</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="#contact">Contact Us</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="#privacy">Privacy Policy</a>
+      </nav>
+      <p class="footer-copy">Copyright &copy; Recipe Jar</p>
+      <p class="footer-ai-note">Images on this website were generated using Google Gemini.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Modal: Write a Review -->
+  <div
+    class="modal fade"
+    id="writeReviewModal"
+    tabindex="-1"
+    aria-labelledby="writeReviewModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content review-modal-content">
+        <div class="modal-header review-modal-header">
+          <h2 class="modal-title fs-4" id="writeReviewModalLabel">Write a Review</h2>
+          <button
+            type="button"
+            id="modalCloseBtn"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close modal"
+          ></button>
+        </div>
+
+        <!-- Review Form View -->
+        <form id="writeReviewForm" novalidate>
+          <div class="modal-body">
+            <!-- Recipe Dropdown -->
+            <div class="mb-3">
+              <label for="recipeSelect" class="form-label fw-semibold">Recipe</label>
+              <select id="recipeSelect" class="form-select modal-input" aria-describedby="recipeError">
+                <option value="">Select a recipe...</option>
+                <option value="Authentic Lamb Biryani">Authentic Lamb Biryani</option>
+                <option value="Spicy Shish Tawook">Spicy Shish Tawook</option>
+                <option value="Healthy Weeknights collection">Healthy Weeknights collection</option>
+                <option value="Vegetarian Lentil Soup">Vegetarian Lentil Soup</option>
+                <option value="Date & Nut Brownies">Date &amp; Nut Brownies</option>
+                <option value="Homemade Manakish">Homemade Manakish</option>
+                <option value="Persian Love Cake">Persian Love Cake</option>
+                <option value="Creamy Garlic Mushroom Risotto">Creamy Garlic Mushroom Risotto</option>
+              </select>
+              <div id="recipeError" class="field-error-msg" role="alert"></div>
+            </div>
+
+            <!-- Clickable & Keyboard-Accessible Star Rating Input -->
+            <div class="mb-3">
+              <span id="starRatingGroupLabel" class="form-label fw-semibold d-block">
+                Your Rating
+              </span>
+              <div class="star-picker-row">
+                <div
+                  id="starPickerGroup"
+                  class="star-picker"
+                  role="radiogroup"
+                  aria-labelledby="starRatingGroupLabel"
+                >
+                  <button
+                    type="button"
+                    class="star-picker-btn"
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="1 star"
+                    data-value="1"
+                  >
+                    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                      <path d="M12 2.2l2.92 6.08 6.68.93-4.86 4.68 1.18 6.65L12 17.35l-5.92 3.19 1.18-6.65L2.4 9.21l6.68-.93L12 2.2z" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="star-picker-btn"
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="2 stars"
+                    data-value="2"
+                  >
+                    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                      <path d="M12 2.2l2.92 6.08 6.68.93-4.86 4.68 1.18 6.65L12 17.35l-5.92 3.19 1.18-6.65L2.4 9.21l6.68-.93L12 2.2z" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="star-picker-btn"
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="3 stars"
+                    data-value="3"
+                  >
+                    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                      <path d="M12 2.2l2.92 6.08 6.68.93-4.86 4.68 1.18 6.65L12 17.35l-5.92 3.19 1.18-6.65L2.4 9.21l6.68-.93L12 2.2z" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="star-picker-btn"
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="4 stars"
+                    data-value="4"
+                  >
+                    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                      <path d="M12 2.2l2.92 6.08 6.68.93-4.86 4.68 1.18 6.65L12 17.35l-5.92 3.19 1.18-6.65L2.4 9.21l6.68-.93L12 2.2z" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="star-picker-btn"
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="5 stars"
+                    data-value="5"
+                  >
+                    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                      <path d="M12 2.2l2.92 6.08 6.68.93-4.86 4.68 1.18 6.65L12 17.35l-5.92 3.19 1.18-6.65L2.4 9.21l6.68-.93L12 2.2z" />
+                    </svg>
+                  </button>
+                </div>
+                <span id="starPickerText" class="star-picker-text">Select a rating</span>
+              </div>
+              <div id="ratingError" class="field-error-msg" role="alert"></div>
+            </div>
+
+            <!-- Reviewer Name -->
+            <div class="mb-3">
+              <label for="reviewerNameInput" class="form-label fw-semibold">Your Name</label>
+              <input
+                type="text"
+                id="reviewerNameInput"
+                class="form-control modal-input"
+                placeholder="e.g., Zainab T"
+                maxlength="60"
+                aria-describedby="nameError"
+              />
+              <div id="nameError" class="field-error-msg" role="alert"></div>
+            </div>
+
+            <!-- Review Textarea + Live Character Counter -->
+            <div class="mb-1">
+              <label for="reviewTextInput" class="form-label fw-semibold">Your Review</label>
+              <textarea
+                id="reviewTextInput"
+                class="form-control modal-input"
+                rows="4"
+                minlength="10"
+                maxlength="300"
+                placeholder="Share your thoughts on flavour, cooking time, or tips (10–300 characters)..."
+                aria-describedby="charCounterText reviewTextError"
+              ></textarea>
+              <div class="textarea-meta-row">
+                <div id="reviewTextError" class="field-error-msg" role="alert"></div>
+                <span id="charCounterText" class="char-counter-text">0 / 300</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer review-modal-footer">
+            <button
+              type="button"
+              id="cancelReviewBtn"
+              class="btn btn-secondary-outline"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="submit" id="submitReviewBtn" class="btn btn-accent submit-review-btn">
+              <span
+                id="submitSpinner"
+                class="spinner-border spinner-border-sm d-none"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              <span id="submitBtnText">Submit Review</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Success Confirmation View (shown briefly after submission) -->
+        <div id="reviewSuccessView" class="review-success-view d-none" role="status" aria-live="polite">
+          <div class="success-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <h3 class="success-title">Review Published!</h3>
+          <p class="success-message">
+            Your review has been successfully posted. Thanks for sharing!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle (CDN) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Shared mobile navigation script + Reviews & Ratings page logic -->
+  <script src="../js/ridda-main.js"></script>
+  <script src="../js/reviews.js"></script>
+</body>
+</html>
