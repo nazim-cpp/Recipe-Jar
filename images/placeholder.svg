@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Recipe Jar placeholder image">
+  <rect width="800" height="600" fill="#E9EFEA" />
+  <rect x="315" y="150" width="170" height="32" rx="8" fill="#D96B43" />
+  <rect x="330" y="182" width="140" height="22" rx="4" fill="#2E5A44" />
+  <rect x="295" y="204" width="210" height="240" rx="28" fill="#FFFFFF" stroke="#2E5A44" stroke-width="10" />
+  <rect x="330" y="275" width="140" height="90" rx="10" fill="#FAF7F2" stroke="#E6E0D6" stroke-width="4" />
+  <text x="400" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#2E5A44">Recipe Jar</text>
+</svg>
