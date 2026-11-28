@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Find answers to frequently asked cooking, recipe scaling, and submission questions in the Recipe Jar Help Center."
+  />
+  <title>Help Center | Recipe Jar</title>
+
+  <!-- Google Fonts: Inter (body & UI) and Playfair Display (brand wordmark) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap 5 CSS (CDN) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+
+  <!-- Shared site styles + page-specific styles (relative paths only) -->
+  <link rel="stylesheet" href="../css/ridda-style.css" />
+  <link rel="stylesheet" href="../css/help.css" />
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
+
+  <!-- Shared Site Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="../index.html" class="brand-link" aria-label="Recipe Jar Home">
+        <img
+          src="../images/logo.png"
+          alt="Recipe Jar logo"
+          class="brand-logo"
+          width="36"
+          height="36"
+        />
+        <span class="brand-name">Recipe Jar</span>
+      </a>
+
+      <button
+        type="button"
+        id="menuToggle"
+        class="menu-toggle"
+        aria-expanded="false"
+        aria-controls="primaryNav"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="menu-toggle-bar" aria-hidden="true"></span>
+        <span class="menu-toggle-bar" aria-hidden="true"></span>
+        <span class="menu-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav id="primaryNav" class="site-nav" aria-label="Primary navigation">
+        <ul class="nav-links">
+          <li><a href="../index.html" class="site-nav-link">Home</a></li>
+          <li><a href="browse.html" class="site-nav-link">Browse</a></li>
+          <li><a href="submit.html" class="site-nav-link">Submit</a></li>
+          <li><a href="saved.html" class="site-nav-link">Saved</a></li>
+          <li><a href="login.html" class="site-nav-link">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="mainContent" class="help-main">
+    <div class="container">
+      <!-- Page Title & Subtitle -->
+      <section class="help-hero-section" aria-labelledby="helpPageHeading">
+        <h1 id="helpPageHeading" class="help-page-title">Help Center</h1>
+        <p class="help-page-subtitle">
+          Quick answers on cooking substitutions, scaling recipes, and sharing dishes with the Recipe Jar community.
+        </p>
+
+        <!-- Large Search Bar with Green Search Button -->
+        <form id="faqSearchForm" class="help-search-form" role="search" aria-label="Search Help Center FAQs">
+          <label for="faqSearchInput" class="visually-hidden">How can we help?</label>
+          <input
+            type="search"
+            id="faqSearchInput"
+            class="form-control help-search-input"
+            placeholder="How can we help?"
+            autocomplete="off"
+          />
+          <button
+            type="submit"
+            id="faqSearchBtn"
+            class="btn help-search-btn"
+            aria-label="Search FAQs"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+            </svg>
+          </button>
+        </form>
+      </section>
+
+      <!-- Two-Column Content Area: 2/3 FAQs Left, 1/3 Guidelines & Support Right -->
+      <div class="help-layout-grid">
+        <!-- Left Column (~2/3 width): FAQs & Category Filter Chips -->
+        <section class="faq-section" aria-labelledby="faqSectionHeading">
+          <div class="faq-section-header">
+            <h2 id="faqSectionHeading" class="faq-section-title">Frequently Asked Questions</h2>
+            <p id="faqCountText" class="faq-count-text" aria-live="polite"></p>
+          </div>
+
+          <!-- Category Filter Chips (rendered or wired via js/help.js) -->
+          <div id="categoryChipsGroup" class="category-chips" role="group" aria-label="Filter FAQs by category">
+            <button type="button" class="category-chip is-active" data-category="All" aria-pressed="true">
+              All
+            </button>
+            <button type="button" class="category-chip" data-category="Cooking Tips" aria-pressed="false">
+              Cooking Tips
+            </button>
+            <button type="button" class="category-chip" data-category="Scaling Recipes" aria-pressed="false">
+              Scaling Recipes
+            </button>
+            <button type="button" class="category-chip" data-category="How to Submit" aria-pressed="false">
+              How to Submit
+            </button>
+          </div>
+
+          <!-- Accordion container populated dynamically from js/help.js -->
+          <div id="faqAccordion" class="accordion faq-accordion" aria-live="polite"></div>
+        </section>
+
+        <!-- Right Column (~1/3 width): Community Guidelines & Still Need Help Cards -->
+        <aside class="help-sidebar" aria-label="Community guidelines and support">
+          <div class="guidelines-card">
+            <h2 class="sidebar-card-title">Guidelines</h2>
+            <ul class="guidelines-list">
+              <li class="guideline-item">
+                <span class="guideline-check-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+                <div>
+                  <strong class="guideline-heading">Be respectful</strong>
+                  <p class="guideline-desc">Keep comments and cooking feedback helpful, welcoming, and kind.</p>
+                </div>
+              </li>
+
+              <li class="guideline-item">
+                <span class="guideline-check-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+                <div>
+                  <strong class="guideline-heading">Share original photos</strong>
+                  <p class="guideline-desc">Upload pictures of dishes you cooked yourself rather than stock images.</p>
+                </div>
+              </li>
+
+              <li class="guideline-item">
+                <span class="guideline-check-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+                <div>
+                  <strong class="guideline-heading">Double-check measurements</strong>
+                  <p class="guideline-desc">Verify ingredient quantities, units, and bake times before publishing.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="support-card">
+            <h2 class="sidebar-card-title">Still need help?</h2>
+            <p class="support-card-text">
+              Can&apos;t find what you&apos;re looking for? Send a note to the Recipe Jar team and we&apos;ll be happy to help.
+            </p>
+            <button
+              type="button"
+              id="contactSupportBtn"
+              class="btn btn-accent support-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#supportModal"
+            >
+              Contact Support
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#about">About Recipe Jar</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="#contact">Contact Us</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="#privacy">Privacy Policy</a>
+      </nav>
+      <p class="footer-copy">Copyright &copy; Recipe Jar</p>
+      <p class="footer-ai-note">Images on this website were generated using Google Gemini.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Modal: Contact Support -->
+  <div
+    class="modal fade"
+    id="supportModal"
+    tabindex="-1"
+    aria-labelledby="supportModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content support-modal-content">
+        <div class="modal-header support-modal-header">
+          <h2 class="modal-title fs-4" id="supportModalLabel">Contact Support</h2>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close modal"
+          ></button>
+        </div>
+
+        <form id="supportForm" novalidate>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="supportNameInput" class="form-label fw-semibold">Your Name</label>
+              <input
+                type="text"
+                id="supportNameInput"
+                class="form-control support-input"
+                placeholder="e.g., Sara M"
+                required
+              />
+              <div id="supportNameError" class="support-error-msg" role="alert"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="supportEmailInput" class="form-label fw-semibold">Email Address</label>
+              <input
+                type="email"
+                id="supportEmailInput"
+                class="form-control support-input"
+                placeholder="you@example.com"
+                required
+              />
+              <div id="supportEmailError" class="support-error-msg" role="alert"></div>
+            </div>
+
+            <div class="mb-2">
+              <label for="supportMessageInput" class="form-label fw-semibold">How can we help?</label>
+              <textarea
+                id="supportMessageInput"
+                class="form-control support-input"
+                rows="4"
+                placeholder="Describe your question or issue..."
+                required
+              ></textarea>
+              <div id="supportMessageError" class="support-error-msg" role="alert"></div>
+            </div>
+          </div>
+
+          <div class="modal-footer support-modal-footer">
+            <button type="button" class="btn btn-secondary-outline" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-accent">
+              Send Message
+            </button>
+          </div>
+        </form>
+
+        <div id="supportSuccessView" class="support-success-view d-none" role="status" aria-live="polite">
+          <div class="support-success-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <h3 class="support-success-title">Message Sent!</h3>
+          <p class="support-success-text">
+            Thanks for reaching out. Our Recipe Jar support team will reply soon.
+          </p>
+          <button type="button" class="btn btn-accent" data-bs-dismiss="modal">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle (CDN) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Shared mobile menu script + Help Center page logic -->
+  <script src="../js/ridda-main.js"></script>
+  <script src="../js/help.js"></script>
+</body>
+</html>
