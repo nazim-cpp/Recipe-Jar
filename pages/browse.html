@@ -1,1 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse All Recipes | Recipe Jar</title>
+  <!-- Bootstrap 5 CSS from CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Main Recipe Jar stylesheet -->
+  <link rel="stylesheet" href="../css/browse.css">
+</head>
+<body>
 
+  <!-- Reusable Site Header -->
+  <header class="site-header">
+  <nav class="navbar navbar-expand-md" aria-label="Main navigation">
+    <div class="container">
+      <a class="navbar-brand brand-logo" href="../index.html">
+        <!-- White jar icon (drawn with SVG so the colour can change) -->
+        <svg width="22" height="26" viewBox="0 0 22 26" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+          <rect x="5" y="1.5" width="12" height="4" rx="1"></rect>
+          <path d="M4 8 Q4 5.5 6 5.5 H16 Q18 5.5 18 8 V22 Q18 24.5 16 24.5 H6 Q4 24.5 4 22 Z"></path>
+          <line x1="8" y1="12" x2="14" y2="12"></line>
+        </svg>
+        <span>Recipe Jar</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-md-center mt-2 mt-md-0">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="browse.html" aria-current="page">Browse</a></li>
+          <li class="nav-item"><a class="nav-link" href="submit.html">Submit</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="saved.html">
+              Saved <span id="savedCountBadge" class="saved-badge" aria-label="Saved recipes count">0</span>
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <!-- Main Content -->
+  <main class="container py-4 py-md-5">
+    <h1 class="page-title mb-4">Browse All Recipes</h1>
+
+    <!-- Search and Filter Controls -->
+    <section class="filter-card mb-4" aria-label="Search and filter recipes">
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-lg-4">
+          <label for="searchInput" class="form-label">Search Recipes</label>
+          <div class="search-group">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by keyword...">
+            <button type="button" id="searchBtn" class="btn btn-search" aria-label="Search recipes">🔍</button>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-4 col-lg-2">
+          <label for="cuisineFilter" class="form-label">Cuisine</label>
+          <select id="cuisineFilter" class="form-select">
+            <option value="All">All</option>
+            <option value="Pakistani">Pakistani</option>
+            <option value="Desi">Desi</option>
+            <option value="Continental">Continental</option>
+            <option value="Dessert">Dessert</option>
+            <option value="Breakfast">Breakfast</option>
+          </select>
+        </div>
+
+        <div class="col-12 col-sm-4 col-lg-2">
+          <label for="timeFilter" class="form-label">Prep Time</label>
+          <select id="timeFilter" class="form-select">
+            <option value="any">Any time</option>
+            <option value="under30">Under 30 min</option>
+            <option value="30to45">30 to 45 min</option>
+            <option value="over45">Over 45 min</option>
+          </select>
+        </div>
+
+        <div class="col-12 col-sm-4 col-lg-2">
+          <label for="sortSelect" class="form-label">Sort</label>
+          <select id="sortSelect" class="form-select">
+            <option value="rating">Top Rated</option>
+            <option value="time">Quickest First</option>
+            <option value="az">A to Z</option>
+          </select>
+        </div>
+
+        <div class="col-12 col-lg-2">
+          <div class="filter-actions">
+            <button type="button" id="applyBtn" class="btn btn-accent">Apply</button>
+            <button type="button" id="clearBtn" class="btn btn-clear">Clear Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Quick Category Chips (hidden on medium and larger screens) -->
+      <div class="mobile-chips d-md-none mt-3" role="group" aria-label="Quick category filter">
+        <button type="button" class="chip-btn active" data-category="All" aria-pressed="true">All</button>
+        <button type="button" class="chip-btn" data-category="Breakfast" aria-pressed="false">Breakfast</button>
+        <button type="button" class="chip-btn" data-category="Desi" aria-pressed="false">Desi</button>
+        <button type="button" class="chip-btn" data-category="Dessert" aria-pressed="false">Dessert</button>
+      </div>
+    </section>
+
+    <!-- Recipe Results Section -->
+    <section aria-label="Recipe results">
+      <p id="resultsCount" class="results-count mb-3" aria-live="polite">Showing 12 of 12 recipes</p>
+
+      <div id="recipeGrid" class="row g-4"></div>
+
+      <div id="emptyState" class="empty-state text-center p-4 p-md-5 d-none">
+        <p class="mb-3">No recipes found. Try a different keyword or clear the filters.</p>
+        <button type="button" id="emptyClearBtn" class="btn btn-accent">Clear Filters</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Reusable Site Footer -->
+  <footer class="site-footer mt-auto">
+    <div class="container">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="about.html">About Recipe Jar</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </nav>
+      <p class="footer-note">Copyright &copy; Recipe Jar</p>
+      <p class="footer-note" id="aiDisclosure">Images on this website were generated using Antigravity's built-in generate_image tool.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle (for mobile hamburger menu) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Page Logic -->
+  <script src="../js/browse.js"></script>
+</body>
+</html>
