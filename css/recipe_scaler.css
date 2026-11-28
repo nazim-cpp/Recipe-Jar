@@ -1,0 +1,333 @@
+
+/*   Styles ONLY for the Recipe Details & Scaler page.
+   Colours, header, footer and buttons come from style(browse).css,
+   so this file only adds what is new on this page.
+   */
+
+/* 
+   1. Back Link, Not Found Message & Recipe Photo
+    */
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.not-found {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.detail-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background-color: var(--tint);
+}
+
+/* ==========================================================================
+   2. Rating Row, Save Button & Time Boxes
+   ========================================================================== */
+.rating-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.rating-line {
+  margin: 0;
+}
+
+.stars {
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+/* When the recipe is already saved, the button turns green */
+.save-btn.saved {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.time-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.time-box {
+  flex: 1;
+  min-width: 90px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+}
+
+.time-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.time-value {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Total time box is highlighted with the tint colour */
+.time-total {
+  background-color: var(--tint);
+  border-color: var(--primary);
+}
+
+/* ==========================================================================
+   3. Serving Scaler Card & Error Message
+   ========================================================================== */
+.scaler-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.scaler-title {
+  margin-bottom: 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.scaler-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.scaler-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  background-color: var(--card);
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.scaler-btn:hover {
+  background-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.servings-text {
+  min-width: 120px;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.servings-error {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.75rem;
+  background-color: #FBE9E3;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: #8A3A1E;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   4. Tabs (Ingredients / Instructions / Nutrition)
+   ========================================================================== */
+.tabs-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--tint);
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.8rem 0.5rem;
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background-color: var(--card);
+  border-bottom-color: var(--accent);
+}
+
+.tab-panel {
+  padding: 1.25rem;
+}
+
+/* ==========================================================================
+   5. Ingredient List, Instruction List & Nutrition Table
+   ========================================================================== */
+.ingredient-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ingredient-item:last-child {
+  border-bottom: none;
+}
+
+.ingredient-amount {
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.instruction-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.instruction-list li {
+  margin-bottom: 0.75rem;
+}
+
+.nutrition-table {
+  margin-bottom: 0;
+}
+
+.nutrition-table th {
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   6. Start Cooking Mode Button
+   ========================================================================== */
+.cooking-btn {
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
+  color: #FFFFFF;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 0.8rem 1rem;
+}
+
+.cooking-btn:hover,
+.cooking-btn:focus-visible {
+  background-color: #244A37;
+  border-color: #244A37;
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   7. Pop-ups (Save Confirmation & Cooking Mode)
+   ========================================================================== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(31, 41, 51, 0.55);
+  z-index: 2000;
+}
+
+.overlay-box {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.overlay-check {
+  margin: 0;
+  font-size: 2.5rem;
+  color: var(--primary);
+}
+
+.overlay-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.cooking-progress {
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.cooking-step {
+  min-height: 90px;
+  font-size: 1.15rem;
+}
+
+.cooking-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.cooking-actions .btn {
+  flex: 1;
+}
+
+/* ==========================================================================
+   8. Responsive Adjustments (Mobile Screens)
+   ========================================================================== */
+@media (max-width: 767px) {
+  .tab-btn {
+    min-width: 100px;
+    font-size: 0.9rem;
+  }
+
+  .tab-panel {
+    padding: 1rem;
+  }
+}
